@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load django_markdown %}
+
+{% block title %}我爱Gvim{% endblock %}
+
+{% block article %}
+{% block anchor %}
+<div class="anchor clearfix">
+	<strong>所在位置：</strong>
+	<ul>
+		<li><a href="/">首页</a></li>
+		<li class="cur">标签</li>
+	</ul>
+</div>
+{% endblock %}
+<div class="tags">
+	{% if tags %}
+	<div class="tags-box">
+		{% for tag in tags %}
+		<a href="#{{ tag.name }}">{{ tag.name }}<sup>{{ tag.blog_set.count }}</sup></a>
+		{% endfor %}
+	</div>
+	<div class="tags-content">
+		{% for tag in tags %}
+		<h4><a name="{{ tag.name }}">{{ tag.name }}</a></h4>
+		<ul class="tags-item">
+			{% for blog in tag.blog_set.all %}
+			<li>{{ blog.publish_time | date:'Y-m-d' }}<a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a></li>
+			{% endfor %}
+		</ul>
+		{% endfor %}
+	</div>
+	{% else %}
+		<div class="no-result">
+			<p>暂时没有标签</p>
+		</div>
+	{% endif %}
+</div>
+{% endblock %}

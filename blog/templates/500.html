@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load django_markdown %}
+
+{% block title %}我爱Gvim{% endblock %}
+
+{% block article %}
+{% block anchor %}
+<div class="anchor clearfix">
+	<strong>所在位置：</strong>
+	<ul>
+		<li><a href="/">首页</a></li>
+		<li class="cur">500服务器错误</li>
+	</ul>
+</div>
+{% endblock %}
+<div class="error">
+	<div class="no-result">
+		<p>噢，服务器出错啦!</p>
+		<p><a href="/">返回首页</a></p>
+	</div>
+</div>
+{% endblock %}

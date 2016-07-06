@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load paginator %}
+{% load django_markdown %}
+
+{% block title %}我爱Gvim{% endblock %}
+
+{% block article %}
+{% block anchor %}
+<div class="anchor clearfix">
+	<strong>所在位置：</strong>
+	<ul>
+		<li><a href="/">首页</a></li>
+		{% if type == 'search' %}
+			<li>搜索 "<b>{{ q }}</b>" 关键字</li>
+		{% elif type == 'category' %}
+		<!--<li><a href="/categories/">分类</a></li>-->
+			<li class="cur">{{ category.name }}</li>
+		{% elif type == 'tag' %}
+			<li><a href="/tags/">标签</a></li>
+			<li class="cur">{{ tag.name }}</li>
+		{% endif %}
+	</ul>
+</div>
+{% endblock %}
+{% begin_pagination blogs p %}
+	{% for blog in blogs %}
+		<article class="article">
+			<header class="header-content">
+				<h1><a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a></h1>
+				<div class="infoWrap">
+					<span class="fa icon-admin"> admin </span>
+					<span class="fa icon-category"><a href="{{ blog.category.get_absolute_url }}"> {{ blog.category }} </a></span>
+					<time><span>{{ blog.publish_time | date:'d'}}</span><span>{{ blog.publish_time | date:'M'}}</span></time>
+					{% if blog.tags.all %}
+						<span class="fa icon-tags">
+							{% for tag in blog.tags.all %}
+							<a href="{{ tag.get_absolute_url }}" class="{{ tag.color }}">{{ tag.name }}</a>
+							{% endfor %}
+						</span>
+					{% endif %}
+				</div>
+			</header>
+			<section>
+				<div class="post-content">{{ blog.summary | markdown }}</div>
+			</section>
+			<a href="{{ blog.get_absolute_url }}" class="continue">继续阅读>></a>
+		</article>
+	{% empty %}
+		<p>no result</p>
+	{% endfor %}
+{% end_pagination %}
+{% endblock %}

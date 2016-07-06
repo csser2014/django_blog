@@ -1,0 +1,28 @@
+<div class="page">
+	{% if pagi_page.has_previous %}
+    <a href="{{ pagi_path }}p/{{ pagi_page.previous_page_number }}/{{ search_path }}" title="上一页" class="prev">上一页</a>
+	{% endif %}
+
+    {% if pagi_range.show_first %}
+	<a href="{{ pagi_path }}p/1/{{ search_path }}">1</a>
+        <span>...</span>
+    {% endif %}
+
+	{% for num in pagi_range.page_numbers %}
+		{% ifequal num pagi_current %}
+			<strong>{{ num }}</strong>
+		{% else %}
+        <a href="{{ pagi_path }}p/{{ num }}/{{ search_path }}" title="{{ num }}">{{ num }}</a>
+		{% endifequal %}
+	{% endfor %}
+
+    {% if pagi_range.show_last %}
+        <span>...</span>
+        <a href="{{ pagi_path }}p/{{pagi_range.last}}/{{ search_path }}">{{pagi_range.last}}</a>
+    {% endif %}
+
+	{% if pagi_page.has_next %}
+    <a href="{{ pagi_path }}p/{{ pagi_page.next_page_number }}/{{ search_path }}" title="下一页" class="next">下一页</a>
+	{% endif %}
+</div>
+

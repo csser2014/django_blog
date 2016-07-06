@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load django_markdown %}
+
+{% block title %}我爱Gvim{% endblock %}
+
+{% block article %}
+{% block anchor %}
+<div class="anchor clearfix">
+	<strong>所在位置：</strong>
+	<ul>
+		<li><a href="/">首页</a></li>
+		<li class="cur">与我联系</li>
+	</ul>
+</div>
+{% endblock %}
+<div class="contact">
+	gvim@163.com
+</div>
+{% endblock %}

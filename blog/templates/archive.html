@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load paginator %}
+{% load django_markdown %}
+
+{% block title %}我爱Gvim{% endblock %}
+
+{% block article %}
+{% block anchor %}
+<div class="anchor clearfix">
+	<strong>所在位置：</strong>
+	<ul>
+		<li><a href="/">首页</a></li>
+		<li class="cur">归档</li>
+	</ul>
+</div>
+{% endblock %}
+{% if blogs %}
+	{% begin_pagination blogs p %}
+	<div class="timeline">
+		<span class="timeline-count"></span>
+		<h4 class="tl-count">发表了<b>{{ count }}</b>篇文章</h4>
+		{% regroup blogs by publish_time|date:"Y" as blog_by_month %}
+		{% for group in blog_by_month %}
+		<h3 class="tl-title">{{ group.grouper }}</h3>
+			{% for blog in group.list %}
+			<article class="tl-article">
+				<div class="tl-content">
+					<span class="date">{{ blog.publish_time | date:'m-d'}}</span>
+					<a href="{{ blog.get_absolute_url }}" class="title">{{ blog.title }}</a>
+				</div>
+			</article>
+			{% endfor %}
+		{% endfor %}
+	</div>
+	{% end_pagination %}
+{% else %}
+	<div class="archive">
+		<div class="no-result">
+			<p>暂时没有归档文章</p>
+		</div>
+	</div>
+{% endif %}
+{% endblock %}
